@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { Context } from 'context'
+import { Context } from '../context'
 
-function user({ index, name }) {
+const User = ({ index, name }) => {
     const { removeUser } = useContext(Context)
 
     return (
-        <li className={"item " + (index % 2 === 1 ? "itemСolored" : "")}>
+        <li className={"user " + (index % 2 ? "is-colored" : "")}>
             <span>
                 {name}
             </span>
@@ -14,4 +14,4 @@ function user({ index, name }) {
     )
 }
 
-export default user
+export default User

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
-import { Context } from 'context'
+import { Context } from '../context'
 
-function loader() {
+const Loader = () => {
     const { importUsers, setFileName } = useContext(Context);
 
     const [isOver, setIsOver] = useState(false);
@@ -12,17 +12,18 @@ function loader() {
         e.stopPropagation();
         setFileName(e.dataTransfer.files[0].name);
 
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onloadend = () => {
+            let res;
             try {
-                let result = JSON.parse(reader.result);
+                res = JSON.parse(reader.result);
             } catch (error) {
                 alert("Unable to read JSON file. Probably the file has a different format.");
                 setLoading(false);
                 return;
             }
             setLoading(false);
-            const sortingUsers = getUsers(JSON.parse(reader.result), []).sort();
+            const sortingUsers = extract(res, []).sort();
             importUsers(sortingUsers);
         };
         reader.readAsText(e.dataTransfer.files[0]);
@@ -30,26 +31,22 @@ function loader() {
         setLoading(true);
         setIsOver(false);
     }
-    function getUsers(reply, users) {
+    function extract(reply, users) {
         if (!users.find(user => user === reply.user))
             if (reply.user)
                 users.push(reply.user);
 
         if (reply.replies)
             for (let i = 0; i < reply.replies.length; i++)
-                users = getUsers(reply.replies[i], users);
+                users = extract(reply.replies[i], users);
 
         return users;
     }
-    function onDragOver(e) {
-        e.preventDefault();
-    }
-
     return (
         <div>
             <div className={(loading ? "loading" : "dropping") + " dropZone " + (isOver ? "over" : "")}
                 onDrop={onDrop}
-                onDragOver={onDragOver}
+                onDragOver={(e) => e.preventDefault()}
                 onDragEnter={() => { setIsOver(true) }}
                 onDragLeave={() => { setIsOver(false) }}
             >
@@ -58,4 +55,4 @@ function loader() {
     )
 }
 
-export default loader
+export default Loader

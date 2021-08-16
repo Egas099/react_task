@@ -1,4 +1,4 @@
-.listWrapper{
+.user-list__wrapper{
     width: 30vw;
     min-width: 250px;
     height: 80vh;
@@ -6,11 +6,11 @@
     border: 1px black solid;
     overflow-y: scroll;
 }
-.itemList{
+.user-list{
     margin: 0;
     padding-left: 0;
 }
-.item{
+.user{
     border: 1px black solid;
     padding: 1vh 1vw;
     list-style-type: none;
@@ -18,10 +18,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.itemСolored{
-    background-color: rgba(185, 185, 185, 0.103);
+.is-colored{
+    background-color: rgba(185, 185, 185, 0.2);
 }
-.item:hover {
+.user:hover {
     background-color: rgba(185, 185, 185, 0.336);
 }
 .delete {
@@ -37,13 +37,6 @@
 }
 .delete:hover {
     background-color: rgba(185, 185, 185, 0.479);
-}
-.empty{
-    text-align: center;
-    margin: 2vh 0;
-}
-.empty::after{
-    content: "Empty";
 }
 .dropZone{
     display: flex;
