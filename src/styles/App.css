@@ -18,7 +18,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
-.is-colored{
+.user--is-colored{
     background-color: rgba(185, 185, 185, 0.2);
 }
 .user:hover {
@@ -38,7 +38,7 @@
 .delete:hover {
     background-color: rgba(185, 185, 185, 0.479);
 }
-.dropZone{
+.drop-zone{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -47,7 +47,7 @@
     width: 300px;
     height: 200px;
 
-    background-color: rgba(212, 212, 212, 0.849);
+    background-color: rgba(173, 174, 201, 0.849);
     border: 2px rgba(71, 71, 71, 0.849) dashed;
     border-radius: 3px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.253);
@@ -58,10 +58,10 @@
     font-size: 2em;
     text-align: center;
 }
-.dropping::after{
+.drop-zone--is-dropping::after{
     content: "Drop here";
 }
-.loading::after{
+.drop-zone--is-loading::after{
     content: "Loading...";
 }
 .over{

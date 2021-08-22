@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react'
+import { useDispatch } from 'react-redux';
 import { Context } from '../context'
+import { addUsers } from '../store/userReduser';
 
 const Loader = () => {
-    const { importUsers, setFileName } = useContext(Context);
+    const dispatch = useDispatch();
+    const { setFileName } = useContext(Context);
 
     const [isOver, setIsOver] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -14,43 +17,52 @@ const Loader = () => {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            let res;
+            let response;
             try {
-                res = JSON.parse(reader.result);
+                response = JSON.parse(reader.result);
             } catch (error) {
-                alert("Unable to read JSON file. Probably the file has a different format.");
+                alert('Unable to read JSON file. Probably the file has a different format.');
                 setLoading(false);
                 return;
             }
             setLoading(false);
-            const sortingUsers = extract(res, []).sort();
-            importUsers(sortingUsers);
+            const sortingUsers = extractUsers(response).sort();
+            dispatch(addUsers(sortingUsers))
         };
         reader.readAsText(e.dataTransfer.files[0]);
 
         setLoading(true);
         setIsOver(false);
     }
-    function extract(reply, users) {
-        if (!users.find(user => user === reply.user))
-            if (reply.user)
-                users.push(reply.user);
-
-        if (reply.replies)
-            for (let i = 0; i < reply.replies.length; i++)
-                users = extract(reply.replies[i], users);
-
+    function extractUsers(reply) {
+        let users = [];
+        let checkReplyings = [];
+        let newReplyings = [reply];
+        do {
+            checkReplyings = newReplyings;
+            newReplyings = [];
+            for (const replying of checkReplyings) {
+                if (!users.find(user => user === replying.user))
+                    if (replying.user)
+                        users.push(replying.user);
+                if (replying.replies)
+                    for (const newReplying of replying.replies)
+                        newReplyings.push(newReplying);
+            }
+        } while (newReplyings.length);
         return users;
     }
+
     return (
-        <div>
-            <div className={(loading ? "loading" : "dropping") + " dropZone " + (isOver ? "over" : "")}
-                onDrop={onDrop}
-                onDragOver={(e) => e.preventDefault()}
-                onDragEnter={() => { setIsOver(true) }}
-                onDragLeave={() => { setIsOver(false) }}
-            >
-            </div>
+        <div className={
+            ['drop-zone', 'drop-zone--' + (loading ? 'is-loading' : 'is-dropping'),
+                (isOver ? 'drop-zone--is-over' : '')].join(' ')
+        }
+            onDrop={onDrop}
+            onDragOver={(e) => e.preventDefault()}
+            onDragEnter={() => setIsOver(true)}
+            onDragLeave={() => setIsOver(false)}
+        >
         </div>
     )
 }

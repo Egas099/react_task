@@ -1,7 +1,7 @@
 import React from 'react'
 import User from './User.jsx';
 
-const UserList = ({ users }) => {
+const UserList = ({users}) => {
     return (
         <div className="user-list__wrapper">
             {users.length
@@ -9,9 +9,9 @@ const UserList = ({ users }) => {
                     {
                         users.map((user, index) =>
                             <User
-                                key={index}
-                                index={index}
+                                key={user}
                                 name={user}
+                                even={index % 2 !== 0}
                             />
                         )
                     }

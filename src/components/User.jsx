@@ -1,15 +1,16 @@
-import React, { useContext } from 'react'
-import { Context } from '../context'
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { removeUser } from '../store/userReduser'
 
-const User = ({ index, name }) => {
-    const { removeUser } = useContext(Context)
+const User = ({ name, even }) => {
+    const dispath = useDispatch()
 
     return (
-        <li className={"user " + (index % 2 ? "is-colored" : "")}>
+        <li className={"user " + (even && "user--is-colored")}>
             <span>
                 {name}
             </span>
-            <span className="delete" onClick={() => removeUser(index)}></span>
+            <span className="delete" onClick={() => dispath(removeUser(name))}></span>
         </li>
     )
 }
