@@ -1,25 +1,34 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, FC } from 'react'
 import { useDispatch } from 'react-redux';
 import { Context } from '../context'
 import { addUsers } from '../store/userReduser';
+import { Replying } from '../types/replying';
 
-const Loader = () => {
+const Loader: FC = () => {
     const dispatch = useDispatch();
     const { setFileName } = useContext(Context);
 
     const [isOver, setIsOver] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    function onDrop(e) {
+    function onDrop(e: React.DragEvent<HTMLDivElement>) {
         e.preventDefault();
         e.stopPropagation();
         setFileName(e.dataTransfer.files[0].name);
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            let response;
+            let response: any = '';
             try {
-                response = JSON.parse(reader.result);
+                response = reader.result;
+                if (typeof response === 'string')
+                    response = JSON.parse(response);
+                else {
+                    alert('Unable to read the file');
+                    setLoading(false);
+                    return;
+                }
+
             } catch (error) {
                 alert('Unable to read JSON file. Probably the file has a different format.');
                 setLoading(false);
@@ -34,10 +43,10 @@ const Loader = () => {
         setLoading(true);
         setIsOver(false);
     }
-    function extractUsers(reply) {
-        let users = [];
-        let checkReplyings = [];
-        let newReplyings = [reply];
+    function extractUsers(reply: Replying): string[] {
+        let users: string[] = [];
+        let checkReplyings: Replying[] = [];
+        let newReplyings: Replying[] = [reply];
         do {
             checkReplyings = newReplyings;
             newReplyings = [];

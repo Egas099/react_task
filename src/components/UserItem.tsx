@@ -1,8 +1,14 @@
 import React from 'react'
+import { FC } from 'react'
 import { useDispatch } from 'react-redux'
 import { removeUser } from '../store/userReduser'
 
-const User = ({ name, even }) => {
+interface UserItemProps {
+    name: string;
+    even: boolean;
+}
+
+const UserItem: FC<UserItemProps> = ({ name, even }) => {
     const dispath = useDispatch()
 
     return (
@@ -15,4 +21,4 @@ const User = ({ name, even }) => {
     )
 }
 
-export default User
+export default UserItem

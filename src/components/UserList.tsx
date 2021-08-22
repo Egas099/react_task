@@ -1,14 +1,19 @@
 import React from 'react'
-import User from './User.jsx';
+import { FC } from 'react';
+import UserItem from './UserItem';
 
-const UserList = ({users}) => {
+interface UserListProps {
+    users: string[];
+}
+
+const UserList: FC<UserListProps> = ({users}) => {
     return (
         <div className="user-list__wrapper">
             {users.length
                 ? <ul className="user-list">
                     {
                         users.map((user, index) =>
-                            <User
+                            <UserItem
                                 key={user}
                                 name={user}
                                 even={index % 2 !== 0}

@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
-import styles from './styles/App.css'
+import './styles/App.css'
 import { Context } from './context';
+import Loader from './components/Loader';
+import { useTypedSelector } from './hooks/useTypedSelector';
 import UserList from './components/UserList';
-import Loader from './components/Loader.jsx';
-import { useSelector } from 'react-redux';
 
 function App() {
-    const state = useSelector(state => state);
-    const [fileName, setFileName] = useState("");
+    const state = useTypedSelector(state => state.user)
+    const [fileName, setFileName] = useState<String>("");
 
     return (
+
         <Context.Provider value={{
             setFileName
         }}>
-            <div className="App" style={styles}>
+            <div className="App">
                 {state.usersExist
                     ? <div>
                         <p className="fileName">{fileName}</p>,
