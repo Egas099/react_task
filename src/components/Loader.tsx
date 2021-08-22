@@ -44,22 +44,21 @@ const Loader: FC = () => {
         setIsOver(false);
     }
     function extractUsers(reply: Replying): string[] {
-        let users: string[] = [];
+        let users: Set<string> = new Set();
         let checkReplyings: Replying[] = [];
         let newReplyings: Replying[] = [reply];
         do {
             checkReplyings = newReplyings;
             newReplyings = [];
             for (const replying of checkReplyings) {
-                if (!users.find(user => user === replying.user))
-                    if (replying.user)
-                        users.push(replying.user);
+                if (replying.user)
+                    users.add(replying.user);
                 if (replying.replies)
                     for (const newReplying of replying.replies)
                         newReplyings.push(newReplying);
             }
         } while (newReplyings.length);
-        return users;
+        return Array.from(users);
     }
 
     return (

@@ -17,7 +17,7 @@ function App() {
             <div className="App">
                 {state.usersExist
                     ? <div>
-                        <p className="fileName">{fileName}</p>,
+                        <p className="file-name">{fileName}</p>,
                         <UserList users={state.users} />
                     </div>
                     : <Loader />

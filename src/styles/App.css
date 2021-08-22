@@ -22,7 +22,7 @@
     background-color: rgba(185, 185, 185, 0.2);
 }
 .user:hover {
-    background-color: rgba(185, 185, 185, 0.336);
+    background-color: rgba(185, 185, 185, 0.3);
 }
 .delete {
     background: none;
@@ -36,7 +36,7 @@
     content: "×";
 }
 .delete:hover {
-    background-color: rgba(185, 185, 185, 0.479);
+    background-color: rgba(185, 185, 185, 0.5);
 }
 .drop-zone{
     display: flex;
@@ -47,10 +47,10 @@
     width: 300px;
     height: 200px;
 
-    background-color: rgba(173, 174, 201, 0.849);
+    background-color: rgba(208, 212, 226, 0.849);
     border: 2px rgba(71, 71, 71, 0.849) dashed;
     border-radius: 3px;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.253);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
 
     color: rgba(0, 0, 0, 0.795);
@@ -64,12 +64,12 @@
 .drop-zone--is-loading::after{
     content: "Loading...";
 }
-.over{
-    box-shadow: 0 0 10px rgb(23, 21, 116);
+.drop-zone--is-over{
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.7);
     background-color:  rgb(233, 233, 233);
-    border: 2px rgba(0, 0, 0, 0.849) dashed;
+    border: 2px rgba(0, 0, 0, 0.8) dashed;
 }
-.fileName{
+.file-name{
     color: rgba(0, 0, 0, 0.795);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2em;
