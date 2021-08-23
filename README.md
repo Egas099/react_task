@@ -1,5 +1,5 @@
 # React task
-## Demo: http://kappa.cs.petrsu.ru/~dmitriev/react_task/
+## Demo: https://egas099.github.io/react_task
 ## Available Scripts
 
 In the project directory, you can run:
